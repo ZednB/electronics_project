@@ -28,6 +28,6 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('providers.urls', namespace='providers')),
-    # path('', include('users.urls', namespace='users')),
     path('', include(router.urls)),
+    path('', include('users.urls', namespace='users')),
 ]

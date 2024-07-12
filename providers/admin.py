@@ -8,7 +8,7 @@ from providers.models import Provider, Product
 class ProviderAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'country', 'city', 'debt', 'supplier_link', 'created_at')
     search_fields = ('name', 'city')
-    list_filter = ('country', 'city')
+    list_filter = ('country', 'city', 'network_type')
     actions = ['clear_debt']
 
     def supplier_link(self, obj):

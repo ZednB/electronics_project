@@ -21,6 +21,17 @@ class Provider(models.Model):
                                  verbose_name='Поставщик')
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Задолженность')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    level = models.PositiveIntegerField(editable=False, verbose_name='Уровень иерархии')
+    network_type = models.PositiveSmallIntegerField(choices=NetworkLevel, verbose_name='Выбор поставщика')
+
+    def save(self, *args, **kwargs):
+        if self.network_type == 0:
+            self.level = 0
+        elif self.network_type == 1 and self.supplier and self.supplier.network_type == 0:
+            self.level = 1
+        elif self.network_type == 2 and self.supplier and self.supplier.network_type in [0, 1]:
+            self.level = 2
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
