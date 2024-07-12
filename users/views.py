@@ -14,6 +14,11 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, IsActiveUser]
 
+    def get_permissions(self):
+        if self.action == 'create':
+            return []
+        return [IsAuthenticated(), IsActiveUser()]
+
 
 class ObtainTokenView(TokenObtainPairView):
     """Возвращает JWT-токен для указанного номера телефона."""
